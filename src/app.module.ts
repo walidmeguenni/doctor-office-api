@@ -6,7 +6,9 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     TypeOrmModule.forRoot(DatabaseConfigOptions),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true, // Makes the ConfigModule globally available
+    }),
   ],
   controllers: [],
   providers: [],
