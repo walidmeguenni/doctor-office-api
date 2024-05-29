@@ -1,6 +1,6 @@
-import { DataSourceOptions } from 'typeorm';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-export const DatabaseConfigOptions: DataSourceOptions = {
+export const DatabaseConfigOptions: TypeOrmModuleOptions = {
   type: 'postgres',
   host: 'localhost',
   port: 5432,
@@ -8,5 +8,6 @@ export const DatabaseConfigOptions: DataSourceOptions = {
   password: 'root123',
   database: 'Doctor-Office',
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  autoLoadEntities: true,
   synchronize: true,
 };
