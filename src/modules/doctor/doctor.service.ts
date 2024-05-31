@@ -1,26 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Doctor } from './entities/doctor.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class DoctorService {
-  create(createDoctorDto: CreateDoctorDto) {
-    return 'This action adds a new doctor';
+  constructor(
+    @InjectRepository(Doctor)
+    private readonly doctorRepository: Repository<Doctor>,
+  ) {}
+
+  async create(createDoctorDto: CreateDoctorDto): Promise<Doctor> {
+    const user = this.doctorRepository.create(createDoctorDto);
+    return await this.doctorRepository.save(user);
   }
 
-  findAll() {
-    return `This action returns all doctor`;
+  async findAll(): Promise<Doctor[]> {
+    return await this.doctorRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} doctor`;
+  async findOne(id: string): Promise<Doctor> {
+    return await this.doctorRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateDoctorDto: UpdateDoctorDto) {
-    return `This action updates a #${id} doctor`;
+  async update(id: string, updateDoctorDto: UpdateDoctorDto): Promise<Doctor> {
+    const doctor = await this.doctorRepository.findOne({ where: { id } });
+    if (!doctor) {
+      throw new NotFoundException(`Doctor with ID ${id} not found`);
+    }
+    const updatedDoctor = this.doctorRepository.merge(doctor, updateDoctorDto);
+    const savedDoctor = await this.doctorRepository.save(updatedDoctor);
+    return savedDoctor;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} doctor`;
+  async remove(id: string) {
+    const deletedDoctor = await this.doctorRepository.findOne({
+      where: { id },
+    });
+    if (!deletedDoctor) {
+      throw new NotFoundException(`Doctor with ID ${id} not found`);
+    }
+    await this.doctorRepository.remove(deletedDoctor);
+    return {
+      statusCode: 200,
+      message: `Doctor ${deletedDoctor.firstName} ${deletedDoctor.lastName} with ID ${id} removed`,
+    };
   }
 }
