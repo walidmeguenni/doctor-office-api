@@ -2,7 +2,14 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from './database/database.config';
 import { ConfigModule } from '@nestjs/config';
-import { DoctorModule } from './modules';
+import {
+  DoctorModule,
+  AdministrativeStaffModule,
+  AppointmentModule,
+  PatientModule,
+  MedicalHistoryModule,
+  PrescriptionModule,
+} from './modules';
 
 @Module({
   imports: [
@@ -11,6 +18,11 @@ import { DoctorModule } from './modules';
       isGlobal: true,
     }),
     DoctorModule,
+    AdministrativeStaffModule,
+    AppointmentModule,
+    PatientModule,
+    MedicalHistoryModule,
+    PrescriptionModule,
   ],
   controllers: [],
   providers: [],
