@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DatabaseConfig } from './database/database.config';
-import { ConfigModule } from '@nestjs/config';
+import { dataSourceOptions } from './database/database.config';
 import {
   DoctorModule,
   AdministrativeStaffModule,
@@ -13,10 +12,7 @@ import {
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(DatabaseConfig),
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     DoctorModule,
     AdministrativeStaffModule,
     AppointmentModule,
