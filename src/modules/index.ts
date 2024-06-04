@@ -4,3 +4,4 @@ export { PatientModule } from './patient/patient.module';
 export { AppointmentModule } from './appointment/appointment.module';
 export { AdministrativeStaffModule } from './administrative-staff/administrative-staff.module';
 export { DoctorModule } from './doctor/doctor.module';
+export { AuthModule } from './auth/auth.module';

@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AdministrativeStaffService } from './administrative-staff.service';
 import { CreateAdministrativeStaffDto } from './dto/create-administrative-staff.dto';
 import { UpdateAdministrativeStaffDto } from './dto/update-administrative-staff.dto';
 
 @Controller('administrative-staff')
 export class AdministrativeStaffController {
-  constructor(private readonly administrativeStaffService: AdministrativeStaffService) {}
+  constructor(
+    private readonly administrativeStaffService: AdministrativeStaffService,
+  ) {}
 
   @Post()
   create(@Body() createAdministrativeStaffDto: CreateAdministrativeStaffDto) {
@@ -23,8 +33,14 @@ export class AdministrativeStaffController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdministrativeStaffDto: UpdateAdministrativeStaffDto) {
-    return this.administrativeStaffService.update(+id, updateAdministrativeStaffDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateAdministrativeStaffDto: UpdateAdministrativeStaffDto,
+  ) {
+    return this.administrativeStaffService.update(
+      +id,
+      updateAdministrativeStaffDto,
+    );
   }
 
   @Delete(':id')

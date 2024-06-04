@@ -33,6 +33,9 @@ export class Doctor {
   @Column()
   password: string;
 
+  @Column({ type: 'varchar', default: 'doctor' })
+  role: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

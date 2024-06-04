@@ -1,18 +1,31 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Doctor } from './entities/doctor.entity';
 import { Repository } from 'typeorm';
+import { AdministrativeStaffService } from '../administrative-staff/administrative-staff.service';
 
 @Injectable()
 export class DoctorService {
   constructor(
     @InjectRepository(Doctor)
     private readonly doctorRepository: Repository<Doctor>,
+    private readonly administrativeStaffService: AdministrativeStaffService,
   ) {}
 
-  async create(createDoctorDto: CreateDoctorDto): Promise<Doctor> {
+  async create(
+    createDoctorDto: CreateDoctorDto,
+    request: any,
+  ): Promise<Doctor> {
+    const admin = this.administrativeStaffService.isAutorized(request.user.id);
+    if (!admin) {
+      throw new ForbiddenException('You are not authorized to create a doctor');
+    }
     const user = this.doctorRepository.create(createDoctorDto);
     return await this.doctorRepository.save(user);
   }

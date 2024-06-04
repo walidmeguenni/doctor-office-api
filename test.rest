@@ -1,0 +1,25 @@
+POST   http://localhost:3000/doctor
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQyMTlkZDJmLTMwODQtNGM4OC04ZTQ5LTY2ZjJkZjY5ZGNjYyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiYWRtaW4iLCJsYXN0TmFtZSI6ImFkbWluIiwiaWF0IjoxNzE3NTE4OTM5LCJleHAiOjE3MTc1NzI5Mzl9.oFi9GPFkKSRnTUhT6Q-bOkPHXzo-_YOmYLhYZCnSod8
+{
+    "firstName": "walid1",
+    "lastName": "mg",
+    "email": "walid1@gmail.com",
+    "specialization": "mzesd",
+    "password": "test"
+}
+
+###
+
+GET  http://localhost:3000/doctor
+Content-Type: application/json
+
+###
+
+POST   http://localhost:3000/auth/admin-signin
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "test"
+}
