@@ -1,0 +1,15 @@
+POST   http://localhost:3000/doctor
+Content-Type: application/json
+
+{
+    "firstName": "walid1",
+    "lastName": "mg",
+    "email": "walid1@gmail.com",
+    "specialization": "mzesd",
+    "password": "test"
+}
+
+###
+
+GET  http://localhost:3000/doctor
+Content-Type: application/json
