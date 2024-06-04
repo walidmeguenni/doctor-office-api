@@ -18,6 +18,6 @@ import { AdministrativeStaffModule } from '../administrative-staff/administrativ
   ],
   controllers: [DoctorController],
   providers: [DoctorService, AuthGuard],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, DoctorService],
 })
 export class DoctorModule {}

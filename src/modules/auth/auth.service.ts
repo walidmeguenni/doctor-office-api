@@ -45,10 +45,10 @@ export class AuthService {
     const { email, password } = input;
     const isDoctorExist = await this.doctorRepository.findOneBy({ email });
     if (!isDoctorExist) {
-      throw new UnauthorizedException('Invalid Credentials');
+      throw new UnauthorizedException('Invalid Credentials 1');
     }
     const isPasswordValid = await compare(password, isDoctorExist.password);
-    if (!isPasswordValid) {
+    if (isPasswordValid) {
       throw new UnauthorizedException('Invalid Credentials');
     }
     const token = this.jwtService.sign({

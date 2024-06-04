@@ -61,4 +61,8 @@ export class DoctorService {
       message: `Doctor ${deletedDoctor.firstName} ${deletedDoctor.lastName} with ID ${id} removed`,
     };
   }
+  async isAutorized(id: string): Promise<boolean> {
+    const admin = await this.doctorRepository.findOneBy({ id });
+    return admin ? true : false;
+  }
 }
