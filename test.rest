@@ -13,3 +13,13 @@ Content-Type: application/json
 
 GET  http://localhost:3000/doctor
 Content-Type: application/json
+
+###
+
+POST   http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email": "walid1@gmail.com",
+    "password": "test"
+}

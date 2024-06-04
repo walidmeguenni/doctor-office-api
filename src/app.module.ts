@@ -8,6 +8,7 @@ import {
   PatientModule,
   MedicalHistoryModule,
   PrescriptionModule,
+  AuthModule,
 } from './modules';
 
 @Module({
@@ -19,6 +20,7 @@ import {
     PatientModule,
     MedicalHistoryModule,
     PrescriptionModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
