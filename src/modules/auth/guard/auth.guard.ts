@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
 import { AdministrativeStaffService } from '../../administrative-staff/administrative-staff.service';
 import * as dotenv from 'dotenv';
-import { DoctorService } from 'src/modules/doctor/doctor.service';
+import { DoctorService } from '../../doctor/doctor.service';
+import { PatientService } from '../../patient/patient.service';
 dotenv.config();
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,6 +18,7 @@ export class AuthGuard implements CanActivate {
     private jwtService: JwtService,
     private readonly administrativeStaffService: AdministrativeStaffService,
     private readonly doctorService: DoctorService,
+    private readonly patientService: PatientService,
   ) {}
 
   canActivate(
@@ -56,7 +58,7 @@ export class AuthGuard implements CanActivate {
         }
         break;
       case 'patient':
-        if (!(await this.administrativeStaffService.isAutorized(id))) {
+        if (!(await this.patientService.isAutorized(id))) {
           throw new ForbiddenException('patient is not found');
         }
         break;

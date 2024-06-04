@@ -1,34 +1,64 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { MedicalHistoryService } from './medical-history.service';
 import { CreateMedicalHistoryDto } from './dto/create-medical-history.dto';
 import { UpdateMedicalHistoryDto } from './dto/update-medical-history.dto';
+import { AuthGuard } from '../auth/guard/auth.guard';
 
 @Controller('medical-history')
 export class MedicalHistoryController {
   constructor(private readonly medicalHistoryService: MedicalHistoryService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createMedicalHistoryDto: CreateMedicalHistoryDto) {
-    return this.medicalHistoryService.create(createMedicalHistoryDto);
+  async create(
+    @Body() createMedicalHistoryDto: CreateMedicalHistoryDto,
+    @Req() request: any,
+  ) {
+    return await this.medicalHistoryService.create(
+      createMedicalHistoryDto,
+      request,
+    );
   }
 
+  @UseGuards(AuthGuard)
   @Get()
-  findAll() {
-    return this.medicalHistoryService.findAll();
+  async findAll(@Req() request: any) {
+    return await this.medicalHistoryService.findAll(request);
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.medicalHistoryService.findOne(+id);
+  async findOne(@Param('id') id: string, @Req() request: any) {
+    return await this.medicalHistoryService.findOne(id, request);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMedicalHistoryDto: UpdateMedicalHistoryDto) {
-    return this.medicalHistoryService.update(+id, updateMedicalHistoryDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateMedicalHistoryDto: UpdateMedicalHistoryDto,
+    @Req() request: any,
+  ) {
+    return await this.medicalHistoryService.update(
+      id,
+      updateMedicalHistoryDto,
+      request,
+    );
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.medicalHistoryService.remove(+id);
+  async remove(@Param('id') id: string, @Req() request: any) {
+    return await this.medicalHistoryService.remove(id, request);
   }
 }

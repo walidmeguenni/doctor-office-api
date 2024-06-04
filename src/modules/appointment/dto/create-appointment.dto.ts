@@ -3,11 +3,11 @@ import { IsDateString, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 export class CreateAppointmentDto {
   @IsUUID()
   @IsNotEmpty()
-  patient: string;
+  patientId: string;
 
   @IsUUID()
   @IsNotEmpty()
-  doctor: string;
+  doctorId: string;
 
   @IsDateString()
   @IsNotEmpty()

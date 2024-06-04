@@ -26,26 +26,34 @@ export class AppointmentController {
     return await this.appointmentService.create(createAppointmentDto, request);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
-  findAll() {
-    return this.appointmentService.findAll();
+  async findAll(@Req() request: any) {
+    return await this.appointmentService.findAll(request);
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.appointmentService.findOne(+id);
+  async findOne(@Param('id') id: string, @Req() request: any) {
+    return await this.appointmentService.findOne(id, request);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateAppointmentDto: UpdateAppointmentDto,
+    @Req() request: any,
   ) {
-    return this.appointmentService.update(+id, updateAppointmentDto);
+    return await this.appointmentService.update(
+      id,
+      updateAppointmentDto,
+      request,
+    );
   }
-
+  @UseGuards(AuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.appointmentService.remove(+id);
+  async remove(@Param('id') id: string, @Req() request: any) {
+    return await this.appointmentService.remove(id, request);
   }
 }

@@ -1,34 +1,59 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { PrescriptionService } from './prescription.service';
 import { CreatePrescriptionDto } from './dto/create-prescription.dto';
 import { UpdatePrescriptionDto } from './dto/update-prescription.dto';
+import { AuthGuard } from '../auth/guard/auth.guard';
 
 @Controller('prescription')
 export class PrescriptionController {
   constructor(private readonly prescriptionService: PrescriptionService) {}
-
+  @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createPrescriptionDto: CreatePrescriptionDto) {
-    return this.prescriptionService.create(createPrescriptionDto);
+  async create(
+    @Body() createPrescriptionDto: CreatePrescriptionDto,
+    @Req() request: any,
+  ) {
+    return await this.prescriptionService.create(
+      createPrescriptionDto,
+      request,
+    );
   }
-
+  @UseGuards(AuthGuard)
   @Get()
-  findAll() {
-    return this.prescriptionService.findAll();
+  async findAll(@Req() request: any) {
+    return await this.prescriptionService.findAll(request);
   }
-
+  @UseGuards(AuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.prescriptionService.findOne(+id);
+  async findOne(@Param('id') id: string, @Req() request: any) {
+    return await this.prescriptionService.findOne(id, request);
   }
-
+  @UseGuards(AuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePrescriptionDto: UpdatePrescriptionDto) {
-    return this.prescriptionService.update(+id, updatePrescriptionDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updatePrescriptionDto: UpdatePrescriptionDto,
+    @Req() request: any,
+  ) {
+    return await this.prescriptionService.update(
+      id,
+      updatePrescriptionDto,
+      request,
+    );
   }
-
+  @UseGuards(AuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.prescriptionService.remove(+id);
+  async remove(@Param('id') id: string, @Req() request: any) {
+    return await this.prescriptionService.remove(id, request);
   }
 }

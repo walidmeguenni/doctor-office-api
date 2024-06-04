@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller';
 import { DoctorModule } from '../doctor/doctor.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AdministrativeStaffModule } from '../administrative-staff/administrative-staff.module';
+import { PatientModule } from '../patient/patient.module';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -15,6 +16,7 @@ dotenv.config();
     }),
     DoctorModule,
     AdministrativeStaffModule,
+    PatientModule,
   ],
   controllers: [AuthController],
   providers: [AuthService],
