@@ -25,6 +25,8 @@ export class AdministrativeStaff {
 
   @Column()
   password: string;
+  @Column({ type: 'varchar', default: 'admin' })
+  role: string;
 
   @CreateDateColumn()
   createdAt: Date;
