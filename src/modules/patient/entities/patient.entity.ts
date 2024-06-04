@@ -5,15 +5,21 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  PrimaryColumn,
 } from 'typeorm';
 import { Appointment } from '../../appointment/entities/appointment.entity';
 import { MedicalHistory } from '../../medical-history/entities/medical-history.entity';
 import { Prescription } from '../../prescription/entities/prescription.entity';
+import { IsEmail } from 'class-validator';
 
 @Entity()
 export class Patient {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @PrimaryColumn()
+  @IsEmail()
+  email: string;
 
   @Column({ length: 50 })
   firstName: string;
@@ -30,7 +36,7 @@ export class Patient {
   @Column()
   password: string;
 
-  @Column({ type: 'varchar', default: 'doctor' })
+  @Column({ type: 'varchar', default: 'patient' })
   role: string;
 
   @CreateDateColumn()
