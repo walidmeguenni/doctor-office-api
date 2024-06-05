@@ -24,7 +24,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async adminsignup(
+  async adminsignin(
     input: SigninDto,
   ): Promise<{ admin: AdministrativeStaff; token: string }> {
     const { email, password } = input;
@@ -33,12 +33,11 @@ export class AuthService {
       throw new UnauthorizedException('Invalid Credentials');
     }
     const isPasswordValid = await compare(password, isAdminExist.password);
-    console.log(isPasswordValid);
-    if (isPasswordValid) {
+    if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid Credentials');
     }
     const token = this.jwtService.sign({
-      id: isAdminExist.id || 1,
+      id: isAdminExist.id,
       email: isAdminExist.email,
       firstName: isAdminExist.firstName,
       lastName: isAdminExist.lastName,
@@ -56,11 +55,11 @@ export class AuthService {
       throw new UnauthorizedException('Invalid Credentials 1');
     }
     const isPasswordValid = await compare(password, isDoctorExist.password);
-    if (isPasswordValid) {
+    if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid Credentials');
     }
     const token = this.jwtService.sign({
-      id: isDoctorExist.id || 1,
+      id: isDoctorExist.id,
       email: isDoctorExist.email,
       firstName: isDoctorExist.firstName,
       lastName: isDoctorExist.lastName,

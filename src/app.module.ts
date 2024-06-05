@@ -10,6 +10,7 @@ import {
   PrescriptionModule,
   AuthModule,
 } from './modules';
+import { SeederModule } from './database/seeders/seed.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import {
     MedicalHistoryModule,
     PrescriptionModule,
     AuthModule,
+    SeederModule,
   ],
   controllers: [],
   providers: [],

@@ -9,7 +9,7 @@ export class AuthController {
 
   @Post('admin-signin')
   signup(@Body() createAuthDto: SigninDto) {
-    return this.authService.adminsignup(createAuthDto);
+    return this.authService.adminsignin(createAuthDto);
   }
 
   @Post('doctor-signin')
