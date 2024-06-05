@@ -33,11 +33,11 @@ export class AuthService {
       throw new UnauthorizedException('Invalid Credentials');
     }
     const isPasswordValid = await compare(password, isAdminExist.password);
-    if (isPasswordValid) {
+    if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid Credentials');
     }
     const token = this.jwtService.sign({
-      id: isAdminExist.id || 1,
+      id: isAdminExist.id,
       email: isAdminExist.email,
       firstName: isAdminExist.firstName,
       lastName: isAdminExist.lastName,
@@ -55,11 +55,11 @@ export class AuthService {
       throw new UnauthorizedException('Invalid Credentials 1');
     }
     const isPasswordValid = await compare(password, isDoctorExist.password);
-    if (isPasswordValid) {
+    if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid Credentials');
     }
     const token = this.jwtService.sign({
-      id: isDoctorExist.id || 1,
+      id: isDoctorExist.id,
       email: isDoctorExist.email,
       firstName: isDoctorExist.firstName,
       lastName: isDoctorExist.lastName,
