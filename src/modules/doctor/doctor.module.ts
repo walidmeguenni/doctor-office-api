@@ -13,7 +13,7 @@ import { PatientModule } from '../patient/patient.module';
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '15h' },
+      signOptions: { expiresIn: '30d' },
     }),
     TypeOrmModule.forFeature([Doctor]),
     AdministrativeStaffModule,
