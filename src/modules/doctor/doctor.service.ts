@@ -4,11 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Doctor } from './entities/doctor.entity';
 import { Repository } from 'typeorm';
 import { AdministrativeStaffService } from '../administrative-staff/administrative-staff.service';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class DoctorService {
@@ -22,12 +22,21 @@ export class DoctorService {
     createDoctorDto: CreateDoctorDto,
     request: any,
   ): Promise<Doctor> {
+    console.log(createDoctorDto);
     const admin = this.administrativeStaffService.isAutorized(request.user.id);
     if (!admin) {
       throw new ForbiddenException('You are not authorized to create a doctor');
     }
-    const user = this.doctorRepository.create(createDoctorDto);
-    return await this.doctorRepository.save(user);
+    const roundSlat = 12;
+    const hashedPassword = await hash(createDoctorDto.password, roundSlat);
+    const doctor = this.doctorRepository.create({
+      email: createDoctorDto.email,
+      firstName: createDoctorDto.firstName,
+      lastName: createDoctorDto.lastName,
+      specialization: createDoctorDto.specialization,
+      password: hashedPassword,
+    });
+    return await this.doctorRepository.save(doctor);
   }
 
   async findAll(): Promise<Doctor[]> {
@@ -36,16 +45,6 @@ export class DoctorService {
 
   async findOne(id: string): Promise<Doctor> {
     return await this.doctorRepository.findOne({ where: { id } });
-  }
-
-  async update(id: string, updateDoctorDto: UpdateDoctorDto): Promise<Doctor> {
-    const doctor = await this.doctorRepository.findOne({ where: { id } });
-    if (!doctor) {
-      throw new NotFoundException(`Doctor with ID ${id} not found`);
-    }
-    const updatedDoctor = this.doctorRepository.merge(doctor, updateDoctorDto);
-    const savedDoctor = await this.doctorRepository.save(updatedDoctor);
-    return savedDoctor;
   }
 
   async remove(id: string) {

@@ -24,7 +24,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async adminsignup(
+  async adminsignin(
     input: SigninDto,
   ): Promise<{ admin: AdministrativeStaff; token: string }> {
     const { email, password } = input;
@@ -33,7 +33,6 @@ export class AuthService {
       throw new UnauthorizedException('Invalid Credentials');
     }
     const isPasswordValid = await compare(password, isAdminExist.password);
-    console.log(isPasswordValid);
     if (isPasswordValid) {
       throw new UnauthorizedException('Invalid Credentials');
     }
